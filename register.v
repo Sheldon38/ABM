@@ -1,46 +1,50 @@
 module register #(parameter WIDTH=8)(
+input rstn,
 input clk,
 input loadbar,
 input enablebar,
 input [WIDTH-1:0] register_input,
-output reg [WIDTH-1:0] register_output
+output [WIDTH-1:0] register_output
 );
-    reg [WIDTH-1:0] d;
+    wire [WIDTH-1:0] d;
     wire [WIDTH-1:0] q;
     
     generate
         genvar i;
         for(i=0;i<WIDTH;i=i+1)
         begin
-            d_flip_flop  dff(clk,d[i],q[i]);
+            d_flip_flop  dff(rstn,clk,d[i],q[i]);
         end
     endgenerate
     
-    always@(*)
-    begin
-        if(!loadbar)
-        begin
-            assign d=register_input;
-        end
-        else
-            assign d=q;
-    end
+    //always@(*)
+    //begin
+    //    if(!loadbar)
+    //    begin
+    //        assign d=register_input;
+    //    end
+    //    else
+    //        assign d=q;
+    //end
+    assign d=(loadbar) ? q : register_input;
+    assign register_output = enablebar ? 64'bz : q;
     
-    always@(*)
-    begin
-        if(!enablebar)
-        begin
-            register_output<=q;
-        end
-        else
-            register_output<=64'bz;
-    end
+    //always@(*)
+    //begin
+    //    if(!enablebar)
+    //    begin
+    //        register_output=q;
+    //    end
+    //    else
+    //        register_output=64'bz;
+    //end
     
     
 endmodule
 
 
 module d_flip_flop(
+input rstn,
 input clk,
 input d,
 output reg q
@@ -48,7 +52,10 @@ output reg q
 
     always@(posedge clk)
     begin
+	if(!rstn)
         q<=d;
+	else
+	q<=1'b0;
     end
 
 endmodule

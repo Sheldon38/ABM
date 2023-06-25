@@ -14,7 +14,7 @@ wire [7:0] adder_sum;
 eight_bit_adder eb(adder_cin,a,adder_input_b,adder_sum,cout);
 
 
-    assign adder_input_b=add_subbar?b:8'hFF^b;
+    assign adder_input_b=add_subbar?b:8'hFF^b;		//COMPLIMENTS B	
     assign adder_cin=add_subbar?1'b0:1'b1;
 
 

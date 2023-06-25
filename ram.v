@@ -1,10 +1,11 @@
 module ram (
+input rstn,
   input [3:0] address,
   input [7:0] data_in,
   input write_bar,
   input read_bar,
   input output_enable,
-  output reg [7:0] data_out
+  output [7:0] data_out
 );
 
   reg [7:0] data_out_temp;
@@ -12,23 +13,29 @@ module ram (
 
   always @(*) 
   begin
-    if (!write_bar) 
-    begin
-      mem[address] <= data_in;
-    end
-	else if(!read_bar)
-	begin
-	  data_out_temp<=mem[address];
+	if(!rstn)	begin
+    		if (!write_bar) 
+    		begin
+    		  mem[address] <= data_in;
+    		end
+		else if(!read_bar)
+		begin
+		  data_out_temp<=mem[address];
+		end
+	end
+	else	begin
+		data_out_temp <= 8'd0;
 	end
   end
   
-  always @(*)
-  begin
-    if(!output_enable)
-        data_out<=data_out_temp;
-    else
-        data_out<=64'bz;
-  end
+  assign data_out =output_enable ? 64'bz : data_out_temp;
+  //always @(*)
+  //begin
+  //  if(!output_enable)
+  //      data_out<=data_out_temp;
+  //  else
+  //      data_out<=64'bz;
+  //end
 
 endmodule
 
