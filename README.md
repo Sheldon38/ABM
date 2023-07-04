@@ -2,8 +2,9 @@
 An 8-bit processor using Verilog based on Ben Eater's playlist link : ![link](https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU.)
 
 # Architecture
-<img src="https://github.com/Sheldon38/ABM/assets/109095852/c92d3ede-27a2-40ad-adcd-51cec0b8e38a" idth="100" height="100">
+<img src="https://github.com/Sheldon38/ABM/assets/109095852/c92d3ede-27a2-40ad-adcd-51cec0b8e38a" idth="200" height="200">
 <br>
+
 # Programs
 To add the assembly level instructions add the instructions in instructions.txt
 The instruction follows the format : <br><br>
